@@ -37,20 +37,17 @@ import {
   GraduationCap,
   Trophy,
   Target,
-  TrendingUp,
-  FileText,
   Settings,
   Download,
   Share2,
   Plus,
   CheckCircle,
-  Clock as ClockIcon,
   Users,
   BarChart3,
 } from "lucide-react";
 
 export default function Profile() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");

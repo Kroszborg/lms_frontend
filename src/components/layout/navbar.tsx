@@ -10,6 +10,12 @@ import {
   Bell,
   LogOut,
   User,
+  Crown,
+  GraduationCap,
+  Settings,
+  BarChart3,
+  FileText,
+  Target,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useAuth } from "@/contexts/auth-context";
@@ -21,12 +27,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
 export function Navbar() {
   const { theme, setTheme } = useTheme();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, hasRole } = useAuth();
   const router = useRouter();
   const [mounted, setMounted] = React.useState(false);
 
@@ -41,6 +48,25 @@ export function Navbar() {
 
   const handleSignIn = () => {
     router.push("/login");
+  };
+
+  const getRoleIcon = () => {
+    if (hasRole("admin")) return <Crown className="h-4 w-4 text-red-500" />;
+    if (hasRole("teacher"))
+      return <GraduationCap className="h-4 w-4 text-blue-500" />;
+    return <User className="h-4 w-4 text-green-500" />;
+  };
+
+  const getRoleLabel = () => {
+    if (hasRole("admin")) return "Admin";
+    if (hasRole("teacher")) return "Teacher";
+    return "Student";
+  };
+
+  const getDashboardPath = () => {
+    if (hasRole("admin")) return "/admin";
+    if (hasRole("teacher")) return "/teacher";
+    return "/student";
   };
 
   if (!mounted) {
@@ -86,25 +112,98 @@ export function Navbar() {
 
           {/* Navigation Items */}
           <div className="flex items-center space-x-4">
-            {/* Navigation Links - Only show when authenticated */}
+            {/* Navigation Links - Role-based */}
             {isAuthenticated && (
               <div className="hidden md:flex items-center space-x-6">
-                <Button
-                  variant="ghost"
-                  className="flex items-center space-x-2"
-                  onClick={() => router.push("/calendar")}
-                >
-                  <Calendar className="h-4 w-4" />
-                  <span>Calendar</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="flex items-center space-x-2"
-                  onClick={() => router.push("/students")}
-                >
-                  <Users className="h-4 w-4" />
-                  <span>Students</span>
-                </Button>
+                {/* Admin Navigation */}
+                {hasRole("admin") && (
+                  <>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/admin")}
+                    >
+                      <BarChart3 className="h-4 w-4" />
+                      <span>Dashboard</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/students")}
+                    >
+                      <Users className="h-4 w-4" />
+                      <span>Users</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/calendar")}
+                    >
+                      <Calendar className="h-4 w-4" />
+                      <span>Calendar</span>
+                    </Button>
+                  </>
+                )}
+
+                {/* Teacher Navigation */}
+                {hasRole("teacher") && (
+                  <>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/teacher")}
+                    >
+                      <GraduationCap className="h-4 w-4" />
+                      <span>Studio</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/students")}
+                    >
+                      <Users className="h-4 w-4" />
+                      <span>Students</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/calendar")}
+                    >
+                      <Calendar className="h-4 w-4" />
+                      <span>Schedule</span>
+                    </Button>
+                  </>
+                )}
+
+                {/* Student Navigation */}
+                {hasRole("student") && (
+                  <>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/student")}
+                    >
+                      <Target className="h-4 w-4" />
+                      <span>Dashboard</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/calendar")}
+                    >
+                      <Calendar className="h-4 w-4" />
+                      <span>Calendar</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-2"
+                      onClick={() => router.push("/assignments")}
+                    >
+                      <FileText className="h-4 w-4" />
+                      <span>Assignments</span>
+                    </Button>
+                  </>
+                )}
               </div>
             )}
 
@@ -143,17 +242,45 @@ export function Navbar() {
                     variant="ghost"
                     className="flex items-center space-x-2"
                   >
-                    <User className="h-4 w-4" />
-                    <span className="hidden md:inline">{user?.username}</span>
+                    {getRoleIcon()}
+                    <span className="hidden md:inline">{user?.name}</span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => router.push("/dashboard")}>
+                <DropdownMenuContent align="end" className="w-56">
+                  <div className="flex items-center justify-start gap-2 p-2">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {user?.name}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {user?.email}
+                      </p>
+                      <div className="flex items-center gap-1 mt-1">
+                        {getRoleIcon()}
+                        <span className="text-xs text-muted-foreground">
+                          {getRoleLabel()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => router.push(getDashboardPath())}
+                  >
+                    <BookOpen className="mr-2 h-4 w-4" />
                     Dashboard
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => router.push("/profile")}>
+                    <User className="mr-2 h-4 w-4" />
                     Profile
                   </DropdownMenuItem>
+                  {hasRole("admin") && (
+                    <DropdownMenuItem onClick={() => router.push("/settings")}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      System Settings
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     Sign Out

@@ -37,12 +37,7 @@ import {
   FileText,
   Users,
   Bell,
-  MapPin,
   Edit,
-  Trash2,
-  CheckCircle,
-  AlertCircle,
-  Star,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -51,7 +46,7 @@ export default function Calendar() {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
   const [view, setView] = useState<"month" | "week" | "day">("month");
 
   if (!isAuthenticated) {

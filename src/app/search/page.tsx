@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, Suspense } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -23,25 +23,18 @@ import {
 } from "@/components/ui/select";
 import {
   Search,
-  Filter,
   BookOpen,
   FileText,
   Users,
-  Calendar,
   Star,
   Clock,
-  ArrowRight,
   Eye,
-  Download,
-  Share,
-  Bookmark,
-  MoreHorizontal,
   TrendingUp,
   History,
   Lightbulb,
 } from "lucide-react";
 
-export default function SearchPage() {
+function SearchContent() {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -341,7 +334,7 @@ export default function SearchPage() {
           <div className="mb-6">
             <div className="flex items-center justify-between mb-4">
               <p className="text-muted-foreground">
-                {totalResults} results found for "{searchTerm}"
+                {totalResults} results found for &quot;{searchTerm}&quot;
               </p>
               <div className="flex items-center space-x-2">
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -675,5 +668,13 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 }

@@ -6,12 +6,8 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -32,14 +28,11 @@ import {
   FileText,
   Clock,
   Star,
-  Trash2,
   Settings,
-  Filter,
   MoreHorizontal,
   Eye,
   EyeOff,
   Archive,
-  Star as StarIcon,
 } from "lucide-react";
 
 export default function Notifications() {

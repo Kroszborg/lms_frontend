@@ -32,21 +32,15 @@ import {
 import {
   Users,
   Search,
-  Filter,
   Plus,
   Mail,
-  Phone,
-  Calendar,
   BookOpen,
   Award,
-  MoreHorizontal,
   Edit,
-  Trash2,
   Eye,
   GraduationCap,
   Clock,
   CheckCircle,
-  AlertCircle,
 } from "lucide-react";
 
 export default function Students() {
@@ -201,7 +195,7 @@ export default function Students() {
           <div>
             <h1 className="text-3xl font-bold text-foreground">Students</h1>
             <p className="text-muted-foreground">
-              Manage and track your students' progress
+              Manage and track your students&apos; progress
             </p>
           </div>
           <Button className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90">

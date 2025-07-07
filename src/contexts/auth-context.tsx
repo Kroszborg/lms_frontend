@@ -3,7 +3,9 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface User {
   username: string;
-  role: string;
+  role: "admin" | "teacher" | "student";
+  name: string;
+  email: string;
 }
 
 interface AuthContextType {
@@ -11,9 +13,35 @@ interface AuthContextType {
   isAuthenticated: boolean;
   login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
+  hasRole: (role: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// Dummy user credentials
+const USERS = {
+  admin: {
+    username: "admin",
+    password: "admin",
+    role: "admin" as const,
+    name: "Admin User",
+    email: "admin@lms.com",
+  },
+  teacher: {
+    username: "teacher",
+    password: "teacher",
+    role: "teacher" as const,
+    name: "John Teacher",
+    email: "teacher@lms.com",
+  },
+  student: {
+    username: "student",
+    password: "student",
+    role: "student" as const,
+    name: "Alice Student",
+    email: "student@lms.com",
+  },
+};
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -44,8 +72,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    if (username === "admin" && password === "admin") {
-      const userData = { username, role: "admin" };
+    // Check credentials against dummy users
+    const userCreds = Object.values(USERS).find(
+      (u) => u.username === username && u.password === password
+    );
+
+    if (userCreds) {
+      const userData: User = {
+        username: userCreds.username,
+        role: userCreds.role,
+        name: userCreds.name,
+        email: userCreds.email,
+      };
       setUser(userData);
       setIsAuthenticated(true);
       localStorage.setItem("isAuthenticated", "true");
@@ -62,8 +100,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem("user");
   };
 
+  const hasRole = (role: string): boolean => {
+    return user?.role === role;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, login, logout, hasRole }}
+    >
       {children}
     </AuthContext.Provider>
   );

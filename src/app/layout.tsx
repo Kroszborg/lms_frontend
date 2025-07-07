@@ -27,12 +27,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Use usePathname to determine the current route
-  const pathname =
-    typeof window !== "undefined" ? window.location.pathname : "";
-  const hideNavbar = pathname.startsWith("/login");
-  const hideFooter = pathname.startsWith("/login");
-
   return (
     <html lang="en">
       <body
@@ -40,9 +34,9 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <AuthProvider>
-            {!hideNavbar && <Navbar />}
+            <Navbar />
             {children}
-            {!hideFooter && <Footer />}
+            <Footer />
           </AuthProvider>
         </ThemeProvider>
       </body>
