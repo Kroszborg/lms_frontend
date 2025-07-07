@@ -109,10 +109,7 @@ export default function Home() {
                   style={{ boxShadow: "0 8px 32px 0 rgba(0,0,0,0.08)" }}
                 >
                   <BookOpen className="h-10 w-10 text-primary" />
-                </div>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
-                  <Sparkles className="h-3 w-3 text-white" />
-                </div>
+                </div>  
               </div>
             </div>
 
@@ -129,7 +126,7 @@ export default function Home() {
                 Empower educators
               </span>
               ,
-              <span className="text-secondary font-semibold">
+              <span className="text-primary font-semibold">
                 {" "}
                 inspire students
               </span>

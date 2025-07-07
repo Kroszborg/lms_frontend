@@ -187,14 +187,16 @@ export default function LoginPage() {
                 <TabsContent value="admin" className="space-y-4 mt-4">
                   <div className="p-4 border rounded-lg bg-gradient-to-r from-red-50 to-orange-50">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold text-lg">Admin Dashboard</h3>
+                      <h3 className="font-semibold text-muted-foreground text-lg">
+                        Admin Dashboard
+                      </h3>
                       <Badge variant="destructive">Full Access</Badge>
                     </div>
                     <p className="text-sm text-muted-foreground mb-3">
                       Complete system control, user management, course
                       oversight, and analytics.
                     </p>
-                    <div className="space-y-2 text-sm">
+                    <div className="space-y-2 text-muted-foreground text-sm">
                       <div>
                         <strong>Username:</strong> admin
                       </div>
@@ -215,14 +217,18 @@ export default function LoginPage() {
                 <TabsContent value="teacher" className="space-y-4 mt-4">
                   <div className="p-4 border rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold text-lg">Teacher Studio</h3>
-                      <Badge variant="default">Course Management</Badge>
+                      <h3 className="font-semibold text-muted-foreground text-lg">
+                        Teacher Studio
+                      </h3>
+                      <Badge variant="default" className="text-muted-foreground">
+                        Course Management
+                      </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground mb-3">
                       Create courses, manage content, grade assignments, and
                       track student progress.
                     </p>
-                    <div className="space-y-2 text-sm">
+                    <div className="space-y-2 text-muted-foreground text-sm">
                       <div>
                         <strong>Username:</strong> teacher
                       </div>
@@ -243,14 +249,18 @@ export default function LoginPage() {
                 <TabsContent value="student" className="space-y-4 mt-4">
                   <div className="p-4 border rounded-lg bg-gradient-to-r from-green-50 to-emerald-50">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold text-lg">Student Portal</h3>
-                      <Badge variant="secondary">Learning Access</Badge>
+                      <h3 className="font-semibold text-muted-foreground text-lg">
+                        Student Portal
+                      </h3>
+                      <Badge variant="secondary" className="text-muted-foreground">
+                        Learning Access
+                      </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground mb-3">
                       Access courses, submit assignments, take quizzes, and
                       track your progress.
                     </p>
-                    <div className="space-y-2 text-sm">
+                    <div className="space-y-2 text-muted-foreground text-sm">
                       <div>
                         <strong>Username:</strong> student
                       </div>
